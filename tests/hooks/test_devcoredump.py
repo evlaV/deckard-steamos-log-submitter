@@ -55,6 +55,7 @@ async def test_basic(dump_dir, monkeypatch, staging_file):
     monkeypatch.setattr(os, 'uname', lambda: posix.uname_result(('1', '2', '3', '4', '5')))
     monkeypatch.setattr(sls.util, 'get_steamos_branch', lambda: 'main')
     monkeypatch.setattr(sys, 'argv', ['python', dump_dir])
+    monkeypatch.setattr(hook, 'TIMEOUT', 0.01)
 
     with open(f'{dump_dir}/data', 'wb') as f:
         f.write(b'\x7FELF')
@@ -71,6 +72,9 @@ async def test_basic(dump_dir, monkeypatch, staging_file):
     with zf.open('dump') as zff:
         assert zff.read() == b'\x7FELF'
 
+    with open(f'{dump_dir}/data', 'rb') as f:
+        assert f.read() == b'0\n'
+
 
 @pytest.mark.asyncio
 async def test_blocking(dump_dir, monkeypatch, data_directory, staging_file):
@@ -78,6 +82,7 @@ async def test_blocking(dump_dir, monkeypatch, data_directory, staging_file):
     monkeypatch.setattr(os, 'uname', lambda: posix.uname_result(('1', '2', '3', '4', '5')))
     monkeypatch.setattr(sls.util, 'get_steamos_branch', lambda: 'main')
     monkeypatch.setattr(sys, 'argv', ['python', dump_dir])
+    monkeypatch.setattr(hook, 'TIMEOUT', 0.01)
 
     with open(f'{dump_dir}/data', 'wb') as f:
         f.write(b'\x7FELF')

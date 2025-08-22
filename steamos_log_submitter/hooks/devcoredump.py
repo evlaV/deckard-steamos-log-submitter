@@ -23,6 +23,8 @@ from steamos_log_submitter.types import JSONEncodable
 __loader__: importlib.machinery.SourceFileLoader
 logger = logging.getLogger(__loader__.name)
 
+TIMEOUT = 10
+
 
 async def run() -> bool:
     driver_blocklist = ['amdgpu']  # amdgpu is handled by the gpu hook
@@ -90,6 +92,12 @@ async def run() -> bool:
                         if not block:
                             break
                         zff.write(block)
+
+    # Delay 10 seconds before clearing the data file just
+    # in case something else wants to grab the contents
+    await asyncio.sleep(TIMEOUT)
+    with open(f'{dumpdir}/data', 'wb') as dump:
+        dump.write(b'0\n')
 
     return True
 
