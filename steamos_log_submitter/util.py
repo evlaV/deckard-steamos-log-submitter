@@ -515,8 +515,11 @@ def get_dmi_info() -> dict[str, str]:
             info['vendor'] = sys_vendor
             info['product'] = products[sys_vendor][board_name]
     elif device_tree_model:
-        deckard_model = subprocess.run(['vrdevice_path', 'model'], capture_output=True, errors='replace', check=True).stdout.strip()
-        info['vendor'] = 'Valve'
-        info['product'] = 'Deckard ' + deckard_model
+        try:
+            deckard_model = subprocess.run(['vrdevice_path', 'model'], capture_output=True, errors='replace', check=True).stdout.strip()
+            info['vendor'] = 'Valve'
+            info['product'] = 'Deckard ' + deckard_model
+        except (subprocess.SubprocessError, OSError) as e:
+            logger.warning('Failed to read vrdevice_path model', exc_info=e)
 
     return info
