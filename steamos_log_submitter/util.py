@@ -489,9 +489,11 @@ def get_dmi_info() -> dict[str, str]:
         'ONE-NETBOOK': product_name,
         'ZOTAC': board_name,
     }
+    device_tree_model = sls.util.read_file('/proc/device-tree/model')
     assert sys_vendor is None or isinstance(sys_vendor, str)
     assert board_name is None or isinstance(board_name, str)
     assert product_name is None or isinstance(product_name, str)
+    assert device_tree_model is None or isinstance(device_tree_model, str)
     if sys_vendor == 'Valve':
         bios_version = sls.util.read_file('/sys/class/dmi/id/bios_version')
         assert bios_version is None or isinstance(bios_version, str)
@@ -512,4 +514,9 @@ def get_dmi_info() -> dict[str, str]:
         elif board_name in products[sys_vendor]:
             info['vendor'] = sys_vendor
             info['product'] = products[sys_vendor][board_name]
+    elif device_tree_model:
+        deckard_model = subprocess.run(['vrdevice_path', 'model'], capture_output=True, errors='replace', check=True).stdout.strip()
+        info['vendor'] = 'Valve'
+        info['product'] = 'Deckard ' + deckard_model
+
     return info
