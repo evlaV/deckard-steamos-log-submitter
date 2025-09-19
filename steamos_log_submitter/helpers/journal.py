@@ -42,13 +42,22 @@ class JournalHelper(Helper):
     }
 
     user_units = {
-        'gamescope-mangoapp.service',
-        'gamescope-session.service',
-        'gamescope-xbindkeys.service',
-        'steam-launcher.service',
-        'steam-notif-daemon.service',
+        #'gamescope-mangoapp.service',
+        #'gamescope-session.service',
+        #'gamescope-xbindkeys.service',
+        #'steam-launcher.service',
+        #'steam-notif-daemon.service',
         'steamos-manager.service',
         'steamos-powerbuttond.service',
+
+        # Deckard units
+        'gamescope-headless.service',
+        'steam.service',
+        'steamvr.service',
+        'steamvr-logs.service',
+        'steamvr-proxmicmute.service'
+        'steamvr-v4l2cam.service',
+
     }
 
     @classmethod
