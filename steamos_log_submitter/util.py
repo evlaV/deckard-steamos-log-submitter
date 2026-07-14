@@ -534,6 +534,9 @@ def get_dmi_info() -> dict[str, str]:
             'G0A1W': 'ZONE',
             'G1A1W': 'ZONE',
         },
+        'Default string': {
+            'AMD BC-250': 'AMD BC-250'
+        },
     }
     products['ONE-NETBOOK TECHNOLOGY CO., LTD.'] = products['ONE-NETBOOK']
     info: dict[str, str] = {}
@@ -555,6 +558,7 @@ def get_dmi_info() -> dict[str, str]:
         'ONE-NETBOOK TECHNOLOGY CO., LTD.': product_name,
         'OrangePi': product_name,
         'ZOTAC': board_name,
+        'Default string': product_name,
     }
     assert sys_vendor is None or isinstance(sys_vendor, str)
     assert board_name is None or isinstance(board_name, str)
