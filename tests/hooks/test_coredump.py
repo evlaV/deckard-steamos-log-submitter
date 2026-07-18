@@ -81,6 +81,7 @@ def test_should_collect() -> None:
     assert hook.should_collect('/home/deck/.local/bin/ruby')
     assert not hook.should_collect('/home/deck/.local/share/Steam/ubuntu12_64/secret')
     assert not hook.should_collect('/app/bin/ikea')
+    assert not hook.should_collect('/home/deck/homebrew/bin/crashomatic')
 
 
 def test_basic(monkeypatch) -> None:

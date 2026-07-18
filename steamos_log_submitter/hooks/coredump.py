@@ -58,6 +58,9 @@ def should_collect(path: str) -> bool:
     if '/.local/share/Steam/' in path:
         # Steam-managed application, has its own handler
         return False
+    if '/homebrew/' in path:
+        # Homebrew package manager
+        return False
 
     return True
 
