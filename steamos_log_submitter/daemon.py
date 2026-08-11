@@ -84,6 +84,8 @@ class Daemon:
 
         if not self._serving:
             return
+        if self._trigger_active:
+            return
         await self.trigger(wait=True)
 
     async def _cancel_periodic(self) -> None:

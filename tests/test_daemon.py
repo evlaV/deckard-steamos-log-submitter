@@ -473,7 +473,7 @@ async def test_inhibit(count_hits, mock_config, monkeypatch):
     count_hits.ret = [], []
     monkeypatch.setattr(sls.runner, 'trigger', awaitable(count_hits))
     monkeypatch.setattr(sls.daemon.Daemon, 'STARTUP', 0.05)
-    monkeypatch.setattr(sls.daemon.Daemon, 'INTERVAL', 0.04)
+    monkeypatch.setattr(sls.daemon.Daemon, 'INTERVAL', 0.05)
     monkeypatch.setattr(sls.util, 'update_app_list', awaitable(lambda: None))
     start = time.time()
     daemon, bus = await dbus_daemon(monkeypatch)
