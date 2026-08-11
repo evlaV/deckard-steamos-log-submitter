@@ -456,7 +456,10 @@ if __name__ == '__main__':  # pragma: no cover
     except OSError as e:
         logger.error('Failed to downgrade process priority', exc_info=e)
     daemon = Daemon(exit_on_shutdown=True)
-    loop = asyncio.get_event_loop()
+    try:
+        loop = asyncio.get_event_loop()
+    except RuntimeError:
+        loop = asyncio.new_event_loop()
     loop.create_task(daemon.start())
     try:
         loop.run_forever()
